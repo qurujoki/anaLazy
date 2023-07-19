@@ -210,7 +210,7 @@ async def shodan(search_method: str = "/shodan/host/", search_value: str = ""):
         return filter_results(results)
 
 
-async def urlscan(url):
+async def urlscan(url: str) -> dict[str, Any] | None:
     def parse_domain(url: str) -> str:
         parsed_url = urlparse(url)
         if parsed_url.netloc:
@@ -260,7 +260,7 @@ async def urlscan(url):
                 return filter_results(await get_search_results(result.get("_id")))
 
 
-def print_table(data):
+def print_table(data: dict) -> None:
     key_width = max(len(str(key)) for key in data.keys())
     print(f"\n{data.pop('Link')}\n")
     for key, value in data.items():
