@@ -12,9 +12,10 @@ Get summary and link for existing scan results for artifacts from various provid
 ## Requirements
 
 - Python3 (no other dependencies are required as only builtin modules are used)
-- API keys for:
-    - [VirusTotal](https://developers.virustotal.com/reference/getting-started)
-    - [AbuseIPDB](https://docs.abuseipdb.com/#introduction)
+- API keys are read from environment variables, and following providers require the key:
+    - [VIRUSTOTAL](https://developers.virustotal.com/reference/getting-started)
+    - [ABUSEIPDB](https://docs.abuseipdb.com/#introduction)
+
 
 ## Example
 
