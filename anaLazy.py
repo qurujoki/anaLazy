@@ -82,7 +82,7 @@ def send_http_request(
     if response.status == 200:
         return json.loads(data.decode())
     print(
-        f"\nReceived status code {response.status} from {host}\n{json.dumps(json.loads(data.decode()))}"
+        f"\n[!] Received status code {response.status} from {host}\n{json.dumps(json.loads(data.decode()))}"
     )
 
 
@@ -108,7 +108,6 @@ def print_result_summary(data: dict[str, Any]) -> None:
             value = ", ".join(str(i) for i in value)
         if value and not isinstance(value, dict):
             print(f"\x20\x20{key} : {str(value)}")
-    print()
 
 
 async def abuseipdb(ip_address: str) -> None:
@@ -121,7 +120,7 @@ async def abuseipdb(ip_address: str) -> None:
     )
     if results and print_raw:
         print(f"\n{json.dumps(results)}\n")
-    else:
+    elif results:
         data = results.get("data", {})
         print_result_summary(
             {
@@ -149,7 +148,7 @@ async def shodan(
     )
     if results and print_raw:
         print(f"\n{json.dumps(results)}\n")
-    else:
+    elif results:
         print_result_summary(
             {
                 "Link": f"https://shodan.io/host/{results.get('ip_str')}",
@@ -189,11 +188,14 @@ async def urlscan(url: str) -> None:
 
     related_searches = await get_searches_for_domain(parse_domain(url))
     if related_searches:
+        search_result = None
         for result in related_searches.get("results", {}):
             results_available_for_url = url in result.get("task", {}).get("url", "")
             if results_available_for_url:
                 search_result = await get_search_results(result.get("_id"))
 
+    if not search_result:
+        print(f"\n[!] Did not find existing scan results from urlscan.io.")
     if search_result and print_raw:
         print(f"\n{json.dumps(search_result)}\n")
     elif search_result:
@@ -257,7 +259,7 @@ async def virustotal(object_type: str, object_identifier: str) -> None:
     )
     if results and print_raw:
         print(f"\n{json.dumps(results)}\n")
-    else:
+    elif results:
         data = results.get("data", {})
         attributes = data.get("attributes", {})
         last_analysis_results = attributes.get("last_analysis_results", {})
@@ -336,6 +338,7 @@ async def main() -> None:
 
         await asyncio.gather(*tasks)
         print_raw = False
+        print()
 
 
 if __name__ == "__main__":
