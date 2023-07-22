@@ -9,6 +9,9 @@ Get summary and link for existing scan results for artifacts from various provid
 |url    |URL        |URLScan, VirusTotal
 |hash   |Hash       |VirusTotal
 
+
+> **Use command `help` to get more full list of commands and options.**
+
 ## Requirements
 
 - Python3 (no other dependencies are required as only builtin modules are used)
