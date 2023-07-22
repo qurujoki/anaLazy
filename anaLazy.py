@@ -319,9 +319,9 @@ async def virustotal(object_type: str, object_identifier: str) -> None:
 async def main() -> None:
     global print_raw
     while True:
-        _command, _value, options = get_user_input()
+        _command, _value, _options = get_user_input()
 
-        if "-r" in options:
+        if "-r" in _options:
             print_raw = True
 
         tasks = []
